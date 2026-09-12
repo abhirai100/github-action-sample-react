@@ -1,8 +1,19 @@
-name: Greeting
-on: push
+name: Deploy Dist
+on: [push,workflow_dispatch]
 jobs:
     greet:
         runs-on: ubuntu-latest
         steps:
             - name: "Greet User"
-              run: echo "hello world"
+              # run: echo "hello world"
+              uses: actions/checkout@v7
+            - name: "Install node 20"
+              uses: actiions/setup-node@v7
+              with: 
+                node-version: 20
+            - name: "Print node version"
+              run: node -v
+            - name: "Install dependencies"
+              run: npm ci
+            - name: "Run test"
+              run: npm run test
